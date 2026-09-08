@@ -55,6 +55,8 @@ footer a{color:#aaa;text-decoration:none;display:block;margin:4px 0}
 .popup{width:100%;max-width:380px;background:#fff;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--border-grad) border-box;border-radius:14px;padding:15px;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
 .menu-item{padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:700;color:#333;display:flex;align-items:center;gap:10px;cursor:pointer}
 .menu-item:last-child{border:none}
+.pay-box{background:#fff;padding:5px 8px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:62px;height:32px;}
+.pay-box img{height:18px;width:auto;object-fit:contain;display:block;}
 </style>
 </head>
 <body>
@@ -121,13 +123,13 @@ Welcome to VeroStore — your trusted destination for MLBB Diamonds, BGMI UC & P
 <p style="color:#aaa">Your trusted hub for Mobile Legends Global! Instant delivery, secure payments and 24/7 support for Indian players.</p>
 
 <h4>We Accept</h4>
-<!-- ALL BOXES IN SAME LINE - NO EXTERNAL IMAGE, NEVER BREAKS -->
-<div style="display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;margin:8px 0 4px;white-space:nowrap;">
-<div style="background:#fff;color:#00B9F1;padding:6px 10px;border-radius:7px;font-weight:900;font-size:11px;min-width:58px;text-align:center;flex-shrink:0;">Paytm</div>
-<div style="background:#fff;color:#000;padding:6px 10px;border-radius:7px;font-weight:900;font-size:11px;min-width:45px;text-align:center;flex-shrink:0;">UPI</div>
-<div style="background:#fff;color:#4285F4;padding:6px 10px;border-radius:7px;font-weight:900;font-size:11px;min-width:52px;text-align:center;flex-shrink:0;">GPay</div>
-<div style="background:#fff;color:#5F259F;padding:6px 10px;border-radius:7px;font-weight:900;font-size:11px;min-width:72px;text-align:center;flex-shrink:0;">PhonePe</div>
-<div style="background:#fff;color:#EB001B;padding:6px 10px;border-radius:7px;font-weight:900;font-size:10px;min-width:85px;text-align:center;flex-shrink:0;">MasterCard</div>
+<!-- REAL ORIGINAL LOGOS - ALL IN ONE LINE - NO BIG BOX -->
+<div style="display:flex;gap:6px;flex-wrap:nowrap;align-items:center;margin:8px 0 4px;overflow-x:auto;">
+<div class="pay-box"><img src="https://cdn.simpleicons.org/paytm/00B9F1" alt="Paytm"></div>
+<div class="pay-box"><img src="https://cdn.simpleicons.org/bhim/000000" alt="UPI"><span style="font-size:10px;font-weight:900;color:#000;margin-left:3px;">UPI</span></div>
+<div class="pay-box"><img src="https://cdn.simpleicons.org/googlepay/4285F4" alt="GPay"></div>
+<div class="pay-box"><img src="https://cdn.simpleicons.org/phonepe/5F259F" alt="PhonePe"></div>
+<div class="pay-box"><img src="https://cdn.simpleicons.org/mastercard/EB001B" alt="MasterCard"></div>
 </div>
 <p style="color:#666;font-size:10px;margin:6px 0 14px;font-weight:700;">100% Secure Payments ⚡</p>
 
@@ -182,4 +184,4 @@ function goHome(){window.scrollTo({top:0,behavior:'smooth'})}
 function goOrders(){window.location.href='orders.html'}
 </script>
 </body>
-                                                                                       </html>
+  </html>
