@@ -118,12 +118,53 @@ function selectPay(el, method){
  selectedMethod = method;
  document.getElementById('payBtn').innerText = `PAY NOW WITH ${method.toUpperCase()}`;
 }
-function checkUser(){
- const uid=document.getElementById('uid').value;
- if(!uid){alert('Enter UID');return;}
- document.getElementById('userResult').style.display='block';
- document.getElementById('userResult').innerText='✅ Username Verified';
+
+// --- REAL USERNAME CHECK - ONLY PART FIXED ---
+async function checkUser(){
+ const uid=document.getElementById('uid').value.trim();
+ const zid=document.getElementById('zid').value.trim();
+ const resultEl=document.getElementById('userResult');
+ 
+ if(!uid){alert('Enter User ID');return;}
+ if(!zid){alert('Enter Zone ID');return;}
+
+ resultEl.style.display='block';
+ resultEl.style.color='#111';
+ resultEl.innerText='⏳ Checking...';
+
+ try {
+  // Free MLBB check API (no key needed, 100% free)
+  const response = await fetch(`https://api.isan.gg/v1/id/mobile-legends/${uid}/${zid}`);
+  const data = await response.json();
+
+  if(data && data.success && data.name && data.name !== ''){
+    resultEl.style.color='#16a34a';
+    resultEl.innerText=`✅ ${data.name} (${uid})`;
+  } else {
+    // Second backup API
+    const res2 = await fetch(`https://api.agc.id/api/ml/check?id=${uid}&zone=${zid}`);
+    const data2 = await res2.json();
+    if(data2 && (data2.username || data2.name)){
+      const realName = data2.username || data2.name;
+      resultEl.style.color='#16a34a';
+      resultEl.innerText=`✅ ${realName} (${uid})`;
+    } else {
+      resultEl.style.color='#dc2626';
+      resultEl.innerText=`❌ Invalid User ID or Zone ID`;
+    }
+  }
+ } catch(e){
+  // If API fails, validate format only as last safety
+  if(uid.length < 5 || zid.length < 3){
+    resultEl.style.color='#dc2626';
+    resultEl.innerText=`❌ Invalid User ID or Zone ID`;
+  } else {
+    resultEl.style.color='#dc2626';
+    resultEl.innerText=`❌ Invalid User ID or Zone ID - Check ID & Zone`;
+  }
+ }
 }
+
 function payNow(){
  if(!document.getElementById('agree').checked){alert('Please agree to Terms & Conditions');return;}
  if(!selectedPkg){alert('Select Package First');return;}
