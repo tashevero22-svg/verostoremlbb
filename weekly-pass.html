@@ -124,7 +124,7 @@ footer{padding:18px 16px;background:#060A14;color:#fff;border-top:3px solid tran
 <a href="privacy.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Privacy Policy</a>
 <a href="terms.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Terms & Conditions</a>
 <a href="refund.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Refund Policy</a>
-<a href="#" style="color:#d1d5db;text-decoration:none;font-size:13px;">Orders</a>
+<a href="orders.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Orders</a>
 <a href="#" style="color:#d1d5db;text-decoration:none;font-size:13px;">Profile</a>
 </div>
 </div>
@@ -211,11 +211,42 @@ async function checkUser(){
 function payNow(){
  if(!verifiedName){alert('Please CHECK USERNAME first');return;}
  const uid=document.getElementById('uid').value.trim();
+ const zid=document.getElementById('zid').value.trim();
  if(uid !== verifiedUID){alert('UID changed! Please CHECK USERNAME again');return;}
  if(!document.getElementById('agree').checked){alert('Please agree to Terms');return;}
  if(!selectedPkg){alert('Select Package First');return;}
- alert(`VERIFIED USER: ${verifiedName}\nUID: ${uid}\nPackage: ${selectedPkg.name} - ₹${selectedPkg.price}\nPayment: ${selectedMethod.toUpperCase()}`);
+
+ // Create Order ID
+ const orderId = 'VERO' + Date.now().toString().slice(-8);
+ const txnId = 'TXN' + Math.random().toString(36).toUpperCase().slice(2,10);
+ const now = new Date();
+ const dateStr = now.toLocaleString('en-IN', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:true });
+
+ // Build order object
+ const newOrder = {
+   id: orderId,
+   txn: txnId,
+   uid: uid,
+   zid: zid,
+   userName: verifiedName,
+   packageName: selectedPkg.name,
+   price: selectedPkg.price,
+   method: selectedMethod,
+   status: 'pending',
+   date: dateStr
+ };
+
+ // Save to localStorage
+ let orders = [];
+ try{ orders = JSON.parse(localStorage.getItem('vero_orders')||'[]'); }catch(e){ orders=[]; }
+ orders.push(newOrder);
+ localStorage.setItem('vero_orders', JSON.stringify(orders));
+ localStorage.setItem('vero_last_order', orderId);
+
+ alert(`✅ Order Placed!\n\nOrder ID: ${orderId}\nUser: ${verifiedName}\nUID: ${uid} (${zid})\nPackage: ${selectedPkg.name} - ₹${selectedPkg.price}\nPayment: ${selectedMethod.toUpperCase()}\n\nYou will be redirected to My Orders.`);
+
+ location.href = 'orders.html';
 }
 </script>
 </body>
-                                                                 </html>
+  </html>
