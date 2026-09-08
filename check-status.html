@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Check Status - VERO STORE</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+:root{--grad: linear-gradient(135deg,#3B82FF 0%,#8B5CF6 100%);--border-grad: linear-gradient(135deg,#3B82FF,#8B5CF6,#C084FC);}
+body{background: linear-gradient(180deg, #F8F9FF 0%, #EEF0FF 100%);color:#111;padding-bottom:0;overflow-x:hidden;min-height:100vh}
+header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:#fff;border-bottom:2px solid transparent;border-image: var(--border-grad) 1;box-shadow:0 2px 10px rgba(91,124,255,0.1);position:sticky;top:0;z-index:10}
+.logo{display:flex;align-items:center}
+.logo img{height:38px;width:auto;object-fit:contain}
+.icon-btn{width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;background:#f1f3ff;border:1px solid #d8ddff;user-select:none;transition:0.2s}
+.icon-btn:active{transform:scale(0.9)}
+.icon-btn svg{width:22px;height:22px;stroke:#5B7CFF}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.overlay.show{display:flex}
+.popup{width:100%;max-width:380px;background:#fff;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--border-grad) border-box;border-radius:14px;padding:15px;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
+.menu-item{padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:700;color:#333;display:flex;align-items:center;gap:10px;cursor:pointer}
+.menu-item:last-child{border:none}
+.back{color:#5B7CFF;padding:10px 12px;cursor:pointer;font-weight:700;font-size:13px;display:inline-flex;align-items:center;gap:4px}
+.back span{font-size:14px;line-height:1}
+.top-title{text-align:center;font-weight:900;font-size:18px;padding:16px 0;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.box{background:#fff;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--border-grad) border-box;border-radius:14px;padding:16px;margin:12px;box-shadow:0 4px 20px rgba(91,124,255,0.08)}
+.label{font-size:13px;font-weight:800;color:#333;margin-bottom:8px;display:block}
+.inp{width:100%;background:#f8f9ff;border:1.5px solid #d8ddff;border-radius:10px;padding:14px;outline:none;font-size:14px}
+.hint{font-size:11px;color:#666;margin-top:8px;line-height:1.4}
+.check-btn{width:100%;background:var(--grad);color:#fff;font-weight:900;border:none;border-radius:10px;padding:14px;margin-top:14px;cursor:pointer;box-shadow:0 4px 15px rgba(91,124,255,0.3)}
+.result{margin-top:16px;display:none}
+.result-card{background:#fff;border:2px solid #5B7CFF;border-radius:12px;padding:14px}
+.result-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.status{font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;color:#fff}
+.status.pending{background:#f59e0b}
+.status.success{background:#16a34a}
+.status.failed{background:#dc2626}
+.row{display:flex;justify-content:space-between;font-size:12px;margin:6px 0;color:#333}
+.row b{color:#111}
+.empty{text-align:center;padding:20px;color:#666;font-size:13px}
+footer{padding:18px 16px;background:#060A14;color:#fff;border-top:3px solid transparent;border-image: var(--border-grad) 1;margin-top:15px;}
+</style>
+</head>
+<body>
+<header>
+<div class="logo" onclick="location.href='index.html'"><img src="logo.png" alt="VERO STORE" onerror="this.src='https://i.ibb.co/0jZz3b4/vero-placeholder.png'"></div>
+<div class="icons">
+<div class="icon-btn" onclick="openMenu()" title="Menu">
+<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+</div>
+</div>
+</header>
+
+<div class="overlay" id="menuOverlay" onclick="if(event.target==this)closeMenu()">
+<div class="popup">
+<h3 style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:10px;font-weight:900">VERO STORE Menu</h3>
+<div class="menu-item" onclick="location.href='index.html'">🏠 Home</div>
+<div class="menu-item" onclick="location.href='orders.html'">📦 My Orders</div>
+<div class="menu-item" onclick="location.href='check-status.html'">🔍 Check Status</div>
+<div class="menu-item" onclick="window.open('https://wa.me/919016447067')">💬 Contact Store Owner</div>
+<div class="menu-item" onclick="location.href='login.html'">👤 Login</div>
+<button onclick="closeMenu()" style="width:100%;margin-top:12px;padding:11px;border-radius:10px;background:var(--grad);color:#fff;border:none;font-weight:800">Close</button>
+</div>
+</div>
+
+<div class="back" onclick="location.href='index.html'"><span>‹</span> Back</div>
+<div class="top-title">Check Order Status</div>
+
+<div class="box">
+<label class="label">Enter Order ID / Transaction ID</label>
+<input id="orderId" class="inp" placeholder="e.g. VERO123456 or TXN...">
+<div class="hint">You can find your Order ID in My Orders page or in your payment receipt. Enter the full ID to check status.</div>
+<button class="check-btn" onclick="checkStatus()">CHECK STATUS</button>
+
+<div id="result" class="result"></div>
+</div>
+
+<div class="box" style="text-align:center">
+<div style="font-weight:900;font-size:14px;margin-bottom:8px;color:#5B7CFF">Need Help?</div>
+<div style="font-size:12px;color:#666;line-height:1.6">If your order is showing PENDING for more than 10 minutes,<br>contact us on WhatsApp with your Order ID.</div>
+<button onclick="window.open('https://wa.me/919016447067')" style="margin-top:12px;background:#25D366;color:#fff;border:none;padding:10px 20px;border-radius:20px;font-weight:800;cursor:pointer;font-size:12px">💬 WhatsApp Support</button>
+</div>
+
+<footer>
+<div style="margin-bottom:18px;">
+<div style="color:#fff;font-weight:900;font-size:15px;margin-bottom:4px;">VERO STORE</div>
+<div style="color:#9ca3af;font-size:12.5px;">Trusted MLBB Global Diamonds • Instant</div>
+</div>
+<div style="margin-bottom:18px;">
+<div style="color:#3B82FF;font-weight:900;font-size:14px;margin-bottom:8px;">Quick Links</div>
+<div style="display:flex;flex-direction:column;gap:5px;">
+<a href="index.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Home</a>
+<a href="orders.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Orders</a>
+<a href="check-status.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Check Status</a>
+<a href="privacy.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Privacy Policy</a>
+</div>
+</div>
+<div style="margin-bottom:18px;">
+<div style="color:#3B82FF;font-weight:900;font-size:14px;margin-bottom:8px;">We Accept</div>
+<div style="color:#d1d5db;font-size:13px;line-height:1.5;">UPI | Paytm | GPay | PhonePe | MasterCard | Visa</div>
+</div>
+<div style="margin-bottom:18px;">
+<div style="color:#3B82FF;font-weight:900;font-size:14px;margin-bottom:8px;">Contact Store Owner</div>
+<div style="color:#d1d5db;font-size:13px;margin-bottom:4px;">WhatsApp: <a href="https://wa.me/919016447067" style="color:#8b5cf6;text-decoration:underline;font-weight:700;">+91 9016447067</a></div>
+<div style="color:#d1d5db;font-size:13px;">Email: <a href="mailto:tashevero22@gmail.com" style="color:#8b5cf6;text-decoration:underline;font-weight:700;">tashevero22@gmail.com</a></div>
+</div>
+<div style="text-align:center;border-top:1px solid #1f2937;padding-top:12px;">
+<div style="color:#9ca3af;font-size:11.5px;">© 2026 Vero Store. All Rights Reserved.</div>
+<div style="color:#6b7280;font-size:11px;margin-top:4px;">Designed & Developed by <span style="color:#8b5cf6;font-weight:700;">Tashe Vero</span></div>
+</div>
+</footer>
+
+<script>
+function openMenu(){document.getElementById('menuOverlay').classList.add('show')}
+function closeMenu(){document.getElementById('menuOverlay').classList.remove('show')}
+
+function checkStatus(){
+ const id = document.getElementById('orderId').value.trim();
+ const resultEl = document.getElementById('result');
+ if(!id){alert('Please enter Order ID');return;}
+
+ resultEl.style.display='block';
+ resultEl.innerHTML = `<div class="empty">⏳ Checking status...</div>`;
+
+ setTimeout(()=>{
+   let orders = [];
+   try{ orders = JSON.parse(localStorage.getItem('vero_orders')||'[]'); }catch(e){}
+
+   const found = orders.find(o=> o.id.toLowerCase()===id.toLowerCase() || (o.txn && o.txn.toLowerCase()===id.toLowerCase()));
+
+   if(found){
+     const statusClass = found.status==='success' ? 'success' : found.status==='failed' ? 'failed' : 'pending';
+     const statusText = found.status==='success' ? 'COMPLETED' : found.status==='failed' ? 'FAILED' : 'PENDING';
+     resultEl.innerHTML = `
+     <div class="result-card">
+       <div class="result-top">
+         <b style="font-size:12px;color:#5B7CFF">#${found.id}</b>
+         <span class="status ${statusClass}">${statusText}</span>
+       </div>
+       <div class="row"><span>Package</span><b>${found.packageName}</b></div>
+       <div class="row"><span>User ID</span><b>${found.uid} (${found.zid})</b></div>
+       <div class="row"><span>Amount</span><b>₹${found.price}</b></div>
+       <div class="row"><span>Date</span><b style="font-size:11px">${found.date}</b></div>
+       <div style="margin-top:10px;font-size:11px;color:#16a34a;font-weight:700;text-align:center">${found.status==='success' ? '✅ Your diamonds have been delivered!' : found.status==='pending' ? '⏳ Processing, please wait 5-10 mins' : '❌ Payment failed, contact support'}</div>
+     </div>`;
+   }else{
+     resultEl.innerHTML = `
+     <div class="result-card" style="border-color:#f59e0b;text-align:center">
+       <div style="font-size:24px">🔍</div>
+       <div style="font-weight:900;font-size:13px;margin:8px 0">Order Not Found</div>
+       <div style="font-size:11px;color:#666;line-height:1.5">No order found with ID: <b>${id}</b><br>Please check your Order ID or go to My Orders page.<br>If you paid and order not showing, contact us on WhatsApp.</div>
+     </div>`;
+   }
+ }, 800);
+}
+</script>
+</body>
+</html>
