@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Weekly Pass - VERO STORE</title>
-<script type="application/javascript" src="https://securestage.paytmpayments.com/theia/api/v1/showPaymentPage?mid=PAYTM_MID&orderId=ORDER_ID"></script>
-<script type="application/javascript" crossorigin="anonymous" src="https://securegw.paytm.in/merchantpgpui/checkoutjs/merchants/PAYTM_MID.js"></script>
+<!-- Cashfree SDK - Ready for next month -->
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 :root{--grad: linear-gradient(135deg,#3B82FF 0%,#8B5CF6 100%);--border-grad: linear-gradient(135deg,#3B82FF,#8B5CF6,#C084FC);}
@@ -28,8 +28,6 @@ header{display:flex;justify-content:space-between;align-items:center;padding:10p
 .pkg.selected::after{content:'✓';background:#22c55e;border-color:#22c55e;color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;line-height:18px;text-align:center}
 .price{color:#5B7CFF;font-weight:900;font-size:18px}
 .label{font-size:12px;font-weight:700}
-
-/* NEW PAYMENT OPTIONS WITH TICK */
 .pay-title{font-size:16px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:18px 12px 8px;border-left:4px solid #5B7CFF;padding-left:8px}
 .pay-box{border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--border-grad) border-box;border-radius:14px;padding:14px;margin:0 12px;box-shadow:0 4px 20px rgba(91,124,255,0.08);text-align:center}
 .pay-methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 12px 0}
@@ -38,7 +36,6 @@ header{display:flex;justify-content:space-between;align-items:center;padding:10p
 .pay-opt::after{content:'';position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;border:1.5px solid #d8ddff;background:#fff}
 .pay-opt.selected::after{content:'✓';background:#22c55e;border-color:#22c55e;color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;line-height:18px;text-align:center}
 .pay-opt img{width:28px;height:28px;object-fit:contain;border-radius:6px;background:#fff}
-
 .terms{margin:14px 0;text-align:center;font-size:12px}
 .pay-now{display:block;width:80%;margin:10px auto;background:var(--grad);color:#fff;font-weight:900;font-size:15px;border:none;border-radius:12px;padding:14px;cursor:pointer;box-shadow:0 4px 15px rgba(91,124,255,0.35)}
 footer{padding:15px;background:#0b0b14;color:#fff;border-top:3px solid transparent;border-image: var(--border-grad) 1;margin-top:20px;font-size:12px}
@@ -46,7 +43,6 @@ footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill
 .back{color:#5B7CFF;padding:10px 12px;cursor:pointer;font-weight:800;font-size:13px}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid transparent;border-image: var(--border-grad) 1;display:flex;justify-content:space-around;padding:8px 0}
 .nav-item{color:#9aa3ff;text-align:center;font-size:10px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
-.nav-item svg{width:22px;height:22px}
 </style>
 </head>
 <body>
@@ -79,20 +75,21 @@ footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill
 
 <div class="pay-title">Select Payment Method</div>
 <div class="pay-box">
-<div style="font-weight:800;font-size:13px">100% Secure • Paytm Gateway</div>
-<div style="font-size:11px;color:#666;margin-top:6px">Choose your preferred method below</div>
+<div style="font-weight:800;font-size:13px">100% Secure • Cashfree Gateway</div>
+<div style="font-size:11px;color:#666;margin-top:6px">UPI, Cards & Wallets - Auto Settlement to BOI</div>
 </div>
 
-<!-- PAYMENT OPTIONS SELECTOR -->
 <div class="pay-methods">
-<div class="pay-opt selected" onclick="selectPay(this,'paytm')"><img src="https://cdn.iconscout.com/icon/free/png-256/paytm-2752065-2284883.png"><span>Paytm</span></div>
-<div class="pay-opt" onclick="selectPay(this,'upi')"><img src="https://cdn.iconscout.com/icon/free/png-256/upi-2085056-1747946.png"><span>UPI</span></div>
-<div class="pay-opt" onclick="selectPay(this,'card')"><img src="https://cdn-icons-png.flaticon.com/512/6963/6963703.png"><span>Card</span></div>
-<div class="pay-opt" onclick="selectPay(this,'netbanking')"><img src="https://cdn-icons-png.flaticon.com/512/2728/2728481.png"><span>Netbanking</span></div>
+<div class="pay-opt selected" onclick="selectPay(this,'upi')"><img src="https://cdn.iconscout.com/icon/free/png-256/upi-2085056-1747946.png"><span>UPI</span></div>
+<div class="pay-opt" onclick="selectPay(this,'gpay')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg"><span>GPay</span></div>
+<div class="pay-opt" onclick="selectPay(this,'phonepe')"><img src="https://cdn.iconscout.com/icon/free/png-256/phonepe-2709164-2249151.png"><span>PhonePe</span></div>
+<div class="pay-opt" onclick="selectPay(this,'paytm')"><img src="https://cdn.iconscout.com/icon/free/png-256/paytm-2752065-2284883.png"><span>Paytm</span></div>
+<div class="pay-opt" onclick="selectPay(this,'mastercard')"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968299.png"><span>Mastercard</span></div>
+<div class="pay-opt" onclick="selectPay(this,'debitcard')"><img src="https://cdn-icons-png.flaticon.com/512/6963/6963703.png"><span>Debit Card</span></div>
 </div>
 
 <div class="terms"><input type="checkbox" id="agree" checked> I agree to Terms & Conditions</div>
-<button class="pay-now" id="payBtn" onclick="payNow()">PAY NOW WITH PAYTM</button>
+<button class="pay-now" id="payBtn" onclick="payNow()">PAY NOW WITH CASHFREE</button>
 
 <footer>
 <b style="color:#fff">VERO STORE</b><br><span style="color:#aaa">Trusted MLBB Global Diamonds • Instant</span>
@@ -100,5 +97,40 @@ footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill
 <div style="text-align:center;color:#8B5CF6">© 2026 Vero Store</div>
 </footer>
 
-<div class="bottom-nav">
-<div class
+<script>
+let selectedPkg = null;
+let selectedMethod = 'upi';
+
+function selectPkg(el, price, name){
+ document.querySelectorAll('.pkg').forEach(p=>p.classList.remove('selected'));
+ el.classList.add('selected');
+ selectedPkg = {price, name};
+}
+function selectPay(el, method){
+ document.querySelectorAll('.pay-opt').forEach(p=>p.classList.remove('selected'));
+ el.classList.add('selected');
+ selectedMethod = method;
+ document.getElementById('payBtn').innerText = `PAY NOW WITH ${method.toUpperCase()} • Cashfree`;
+}
+function checkUser(){
+ const uid=document.getElementById('uid').value;
+ const zid=document.getElementById('zid').value;
+ if(!uid){alert('Enter UID');return;}
+ document.getElementById('userResult').style.display='block';
+ document.getElementById('userResult').innerText='✅ Username Verified (Demo) - Web Ready Mode';
+}
+function payNow(){
+ if(!document.getElementById('agree').checked){
+    alert('Please agree to Terms & Conditions');
+    return;
+ }
+ if(!selectedPkg){alert('Select Package First');return;}
+ // WEB READY MODE - No real payment this month
+ alert(`WEB READY MODE\nPackage: ${selectedPkg.name} - ₹${selectedPkg.price}\nPayment: ${selectedMethod.toUpperCase()} via Cashfree\n\nThis month: Web ready only.\nNext month: Cashfree live + BOI settlement + Auto API will be activated.\n\nYour site is ready to sleep!`);
+ // NEXT MONTH CODE (uncomment when Cashfree ready):
+ // const cashfree = Cashfree({mode:"production"});
+ // cashfree.checkout({paymentSessionId:"YOUR_SESSION_ID"});
+}
+</script>
+</body>
+  </html>
