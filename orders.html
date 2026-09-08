@@ -91,7 +91,7 @@ footer{padding:18px 16px;background:#060A14;color:#fff;border-top:3px solid tran
 </div>
 <div style="text-align:center;border-top:1px solid #1f2937;padding-top:12px;">
 <div style="color:#9ca3af;font-size:11.5px;">© 2026 Vero Store. All Rights Reserved.</div>
-<div style="color:#6b7280;font-size:11px;margin-top:4px;">Designed & Developed by <span style="color:#8b5cf6;font-weight:700;">Tashe Vero</span> — Founder of Vero Store | <a href="contact.html" style="color:#3B82FF;text-decoration:underline;font-weight:700;">Contact Developer</a></div>
+<div style="color:#6b7280;font-size:11px;margin-top:4px;">Designed & Developed by <span style="color:#8b5cf6;font-weight:700;">Tashe Vero</span> — Founder of Vero Store | <a href="contact.html" style="color:#3BFF;text-decoration:underline;font-weight:700;">Contact Developer</a></div>
 </div>
 </footer>
 
@@ -117,7 +117,7 @@ function loadOrders(){
    return;
  }
 
- container.innerHTML = orders.reverse().map(o=>{
+ container.innerHTML = [...orders].reverse().map(o=>{
    const statusClass = o.status==='success' ? 'success' : o.status==='failed' ? 'failed' : 'pending';
    const statusText = o.status==='success' ? 'COMPLETED' : o.status==='failed' ? 'FAILED' : 'PENDING';
    return `
