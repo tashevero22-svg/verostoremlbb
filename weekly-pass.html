@@ -10,21 +10,23 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 :root{--grad: linear-gradient(135deg,#3B82FF 0%,#8B5CF6 100%);--border-grad: linear-gradient(135deg,#3B82FF,#8B5CF6,#C084FC);}
-body{background:#fff;color:#111;padding-bottom:80px}
+body{background:#fff;color:#111;padding-bottom:80px;overflow-x:hidden}
 header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:#fff;border-bottom:2px solid transparent;border-image: var(--border-grad) 1;box-shadow:0 2px 10px rgba(91,124,255,0.1);position:sticky;top:0;z-index:10}
 .logo img{height:38px}
 .icon-btn{width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;background:#f1f3ff;border:1px solid #d8ddff}
 .icon-btn svg{width:22px;height:22px;stroke:#5B7CFF}
 .top-title{text-align:center;font-weight:900;font-size:16px;padding:14px 0;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.box{border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--border-grad) border-box;border-radius:14px;padding:14px;margin:10px 12px;box-shadow:0 4px 20px rgba(91,124,255,0.08)}
-.input-row{display:flex;gap:10px}
-.inp-uid{flex:2;background:#f8f9ff;border:1.5px solid #d8ddff;border-radius:10px;padding:14px;outline:none}
-.inp-zone{flex:1;background:#f8f9ff;border:1.5px solid #d8ddff;border-radius:10px;padding:14px;outline:none;text-align:center}
+.box{border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--border-grad) border-box;border-radius:14px;padding:14px;margin:10px 12px;box-shadow:0 4px 20px rgba(91,124,255,0.08);overflow:hidden}
+.input-row{display:flex;gap:8px;width:100%}
+.inp-uid{flex:1.6;min-width:0;background:#f8f9ff;border:1.5px solid #d8ddff;border-radius:10px;padding:14px;outline:none}
+.inp-zone{flex:0.9;min-width:0;max-width:110px;background:#f8f9ff;border:1.5px solid #d8ddff;border-radius:10px;padding:14px;outline:none;text-align:center}
 .hint{font-size:11px;color:#666;margin-top:10px;line-height:1.4}
 .check-btn{width:100%;background:var(--grad);color:#fff;font-weight:900;border:none;border-radius:10px;padding:14px;margin-top:14px;cursor:pointer}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 12px 0}
-.pkg{border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--border-grad) border-box;border-radius:12px;padding:16px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;box-shadow:0 2px 12px rgba(91,124,255,0.08)}
+.pkg{position:relative;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--border-grad) border-box;border-radius:12px;padding:16px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;box-shadow:0 2px 12px rgba(91,124,255,0.08)}
 .pkg.selected{border:2px solid #5B7CFF;background:#f1f3ff}
+.pkg::after{content:'';position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;border:1.5px solid #d8ddff;background:#fff}
+.pkg.selected::after{content:'✓';background:#22c55e;border-color:#22c55e;color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;line-height:18px;text-align:center}
 .price{color:#5B7CFF;font-weight:900;font-size:18px}
 .label{font-size:12px;font-weight:700}
 .pay-title{font-size:16px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:18px 12px 8px;border-left:4px solid #5B7CFF;padding-left:8px}
@@ -91,10 +93,7 @@ footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill
 <script>
 let selectedPrice=0, selectedName='';
 const whatsappNumber="919016447067";
-
-// ⚠️ PUT YOUR PAYTM MID HERE (from Paytm Dashboard)
 const PAYTM_MID = "YOUR_MID_HERE"; 
-// ⚠️ YOUR BACKEND URL THAT CREATES txnToken
 const BACKEND_URL = "https://your-backend.com/create-paytm-order";
 
 function isValidUID(v){ return /^[0-9]{5,12}$/.test(v); }
@@ -113,7 +112,6 @@ const j=await r.json();
 if(j&&j.name){ res.style.color='#00c853'; res.innerText='✅ '+j.name; } else { res.style.color='#ff6d00'; res.innerText='⚠️ Could not verify'; }
 }catch(e){ res.style.color='#ff6d00'; res.innerText='⚠️ Service unavailable'; }
 }
-
 async function payNow(){
 const uid=document.getElementById('uid').value.trim();
 const zid=document.getElementById('zid').value.trim();
@@ -121,23 +119,17 @@ if(!uid||!zid){ alert('Enter UID & Zone'); return; }
 if(!isValidUID(uid)||!isValidZone(zid)){ alert('Invalid ID'); return; }
 if(!selectedPrice){ alert('Select package'); return; }
 if(!document.getElementById('agree').checked){ alert('Agree to Terms'); return; }
-
 const orderId='VERO'+Date.now().toString().slice(-8);
 document.getElementById('payBtn').innerText='Creating Order...';
 document.getElementById('payBtn').disabled=true;
-
 try{
-// 1. CALL YOUR BACKEND TO GET txnToken
 const response = await fetch(BACKEND_URL, {
   method:'POST',
   headers:{'Content-Type':'application/json'},
   body: JSON.stringify({ orderId, amount: selectedPrice, uid, zid, product: selectedName })
 });
 const data = await response.json();
-
 if(!data.txnToken){ alert('Failed to create Paytm order. Check backend.'); document.getElementById('payBtn').innerText='PAY NOW WITH PAYTM'; document.getElementById('payBtn').disabled=false; return; }
-
-// 2. OPEN PAYTM CHECKOUT
 var config = {
   "root": "",
   "flow": "DEFAULT",
@@ -149,12 +141,10 @@ var config = {
   },
   "handler": {
     "notifyMerchant": function(eventName, data){
-      console.log("Paytm Event:", eventName, data);
       if(eventName === 'SESSION_EXPIRED'){ alert('Session expired'); }
       if(eventName === 'APP_CLOSED'){ document.getElementById('payBtn').innerText='PAY NOW WITH PAYTM'; document.getElementById('payBtn').disabled=false; }
     },
     "transactionStatus": function(data){
-      // This is called after payment completes
       if(data.STATUS === 'TXN_SUCCESS'){
         let all=JSON.parse(localStorage.getItem('vero_orders')||'[]');
         all.push({ id:orderId, uid, zid, item:selectedName, price:selectedPrice, txnId:data.TXNID, status:'PAID_VERIFIED', date:new Date().toLocaleString() });
@@ -170,7 +160,6 @@ var config = {
     }
   }
 };
-
 if(window.Paytm && window.Paytm.CheckoutJS){
   window.Paytm.CheckoutJS.onLoad(function(){
     window.Paytm.CheckoutJS.init(config).then(function(){
@@ -180,7 +169,6 @@ if(window.Paytm && window.Paytm.CheckoutJS){
 } else {
   alert('Paytm SDK not loaded. Check MID.');
 }
-
 }catch(err){
   alert('Error: '+err.message);
   document.getElementById('payBtn').innerText='PAY NOW WITH PAYTM';
@@ -189,4 +177,4 @@ if(window.Paytm && window.Paytm.CheckoutJS){
 }
 </script>
 </body>
-</html>
+  </html>
