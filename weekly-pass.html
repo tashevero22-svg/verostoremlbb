@@ -119,7 +119,7 @@ function selectPay(el, method){
  document.getElementById('payBtn').innerText = `PAY NOW WITH ${method.toUpperCase()}`;
 }
 
-// --- REAL USERNAME CHECK - ONLY PART FIXED ---
+// --- FIXED REAL CHECK - WORKS ON GITHUB.IO ---
 async function checkUser(){
  const uid=document.getElementById('uid').value.trim();
  const zid=document.getElementById('zid').value.trim();
@@ -132,37 +132,47 @@ async function checkUser(){
  resultEl.style.color='#111';
  resultEl.innerText='⏳ Checking...';
 
- try {
-  // Free MLBB check API (no key needed, 100% free)
-  const response = await fetch(`https://api.isan.gg/v1/id/mobile-legends/${uid}/${zid}`);
-  const data = await response.json();
+ // List of free checkers to try one by one
+ const apis = [
+  `https://api.isan.gg/v1/id/mobile-legends/${uid}/${zid}`,
+  `https://id-game-checker.vercel.app/api/mobile-legends?id=${uid}&zone=${zid}`,
+  `https://api.agc.id/api/ml/check?id=${uid}&zone=${zid}`
+ ];
 
-  if(data && data.success && data.name && data.name !== ''){
+ for(let api of apis){
+  try{
+   // Use allorigins proxy to bypass CORS on github.io
+   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(api)}`;
+   const res = await fetch(proxy);
+   const wrapper = await res.json();
+   const text = wrapper.contents;
+   const data = JSON.parse(text);
+
+   // Format 1: isan.gg -> {success:true, name:"..."}
+   if(data.success && data.name){
     resultEl.style.color='#16a34a';
-    resultEl.innerText=`✅ ${data.name} (${uid})`;
-  } else {
-    // Second backup API
-    const res2 = await fetch(`https://api.agc.id/api/ml/check?id=${uid}&zone=${zid}`);
-    const data2 = await res2.json();
-    if(data2 && (data2.username || data2.name)){
-      const realName = data2.username || data2.name;
-      resultEl.style.color='#16a34a';
-      resultEl.innerText=`✅ ${realName} (${uid})`;
-    } else {
-      resultEl.style.color='#dc2626';
-      resultEl.innerText=`❌ Invalid User ID or Zone ID`;
-    }
-  }
- } catch(e){
-  // If API fails, validate format only as last safety
-  if(uid.length < 5 || zid.length < 3){
-    resultEl.style.color='#dc2626';
-    resultEl.innerText=`❌ Invalid User ID or Zone ID`;
-  } else {
-    resultEl.style.color='#dc2626';
-    resultEl.innerText=`❌ Invalid User ID or Zone ID - Check ID & Zone`;
+    resultEl.innerText=`✅ ${data.name}`;
+    return;
+   }
+   // Format 2: id-game-checker -> {data:{username:"..."}} or {username:"..."}
+   let realName = data.username || data.name || (data.data && data.data.username) || (data.data && data.data.name);
+   if(realName && realName !== '' && realName !== 'Invalid'){
+    resultEl.style.color='#16a34a';
+    resultEl.innerText=`✅ ${realName}`;
+    return;
+   }
+   // If API says invalid, try next but if last API also invalid then show invalid
+   if(data.error || data.success === false || data.message === 'Invalid ID'){
+    continue;
+   }
+  }catch(err){
+   continue; // try next API
   }
  }
+
+ // If all APIs say invalid or failed
+ resultEl.style.color='#dc2626';
+ resultEl.innerText=`❌ Invalid User ID or Zone ID`;
 }
 
 function payNow(){
