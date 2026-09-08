@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login - VERO STORE</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+:root{--grad: linear-gradient(135deg,#3B82FF 0%,#8B5CF6 100%);--border-grad: linear-gradient(135deg,#3B82FF,#8B5CF6,#C084FC);}
+body{background: linear-gradient(180deg, #F8F9FF 0%, #EEF0FF 100%);color:#111;padding-bottom:0;overflow-x:hidden;min-height:100vh}
+header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:#fff;border-bottom:2px solid transparent;border-image: var(--border-grad) 1;box-shadow:0 2px 10px rgba(91,124,255,0.1);position:sticky;top:0;z-index:10}
+.logo{display:flex;align-items:center}
+.logo img{height:38px;width:auto;object-fit:contain}
+.icon-btn{width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;background:#f1f3ff;border:1px solid #d8ddff;user-select:none;transition:0.2s}
+.icon-btn:active{transform:scale(0.9)}
+.icon-btn svg{width:22px;height:22px;stroke:#5B7CFF}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.overlay.show{display:flex}
+.popup{width:100%;max-width:380px;background:#fff;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--border-grad) border-box;border-radius:14px;padding:15px;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
+.menu-item{padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:700;color:#333;display:flex;align-items:center;gap:10px;cursor:pointer}
+.menu-item:last-child{border:none}
+.back{color:#5B7CFF;padding:10px 12px;cursor:pointer;font-weight:700;font-size:13px;display:inline-flex;align-items:center;gap:4px}
+.back span{font-size:14px;line-height:1}
+.top-title{text-align:center;font-weight:900;font-size:18px;padding:16px 0;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.box{background:#fff;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box, var(--border-grad) border-box;border-radius:14px;padding:20px;margin:12px;box-shadow:0 4px 20px rgba(91,124,255,0.08)}
+.login-icon{text-align:center;font-size:48px;margin-bottom:8px}
+.login-head{text-align:center;font-weight:900;font-size:18px;margin-bottom:4px}
+.login-sub{text-align:center;font-size:12px;color:#666;margin-bottom:18px}
+.label{font-size:12px;font-weight:800;color:#333;margin:12px 0 6px;display:block}
+.inp{width:100%;background:#f8f9ff;border:1.5px solid #d8ddff;border-radius:10px;padding:14px;outline:none;font-size:14px}
+.inp:focus{border-color:#5B7CFF;background:#fff}
+.btn{width:100%;background:var(--grad);color:#fff;font-weight:900;border:none;border-radius:10px;padding:14px;margin-top:18px;cursor:pointer;box-shadow:0 4px 15px rgba(91,124,255,0.3);font-size:14px}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:#999;font-size:11px;font-weight:700}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#e5e7eb}
+.social-btn{width:100%;background:#fff;border:1.5px solid #e5e7eb;border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:13px;cursor:pointer;margin-bottom:10px}
+.logged-box{text-align:center;display:none}
+.avatar{width:64px;height:64px;background:var(--grad);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:24px;margin:0 auto 12px}
+footer{padding:18px 16px;background:#060A14;color:#fff;border-top:3px solid transparent;border-image: var(--border-grad) 1;margin-top:15px;}
+</style>
+</head>
+<body>
+<header>
+<div class="logo" onclick="location.href='index.html'"><img src="logo.png" alt="VERO STORE" onerror="this.src='https://i.ibb.co/0jZz3b4/vero-placeholder.png'"></div>
+<div class="icons">
+<div class="icon-btn" onclick="openMenu()" title="Menu">
+<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+</div>
+</div>
+</header>
+
+<div class="overlay" id="menuOverlay" onclick="if(event.target==this)closeMenu()">
+<div class="popup">
+<h3 style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:10px;font-weight:900">VERO STORE Menu</h3>
+<div class="menu-item" onclick="location.href='index.html'">🏠 Home</div>
+<div class="menu-item" onclick="location.href='orders.html'">📦 My Orders</div>
+<div class="menu-item" onclick="location.href='check-status.html'">🔍 Check Status</div>
+<div class="menu-item" onclick="window.open('https://wa.me/919016447067')">💬 Contact Store Owner</div>
+<div class="menu-item" onclick="location.href='login.html'">👤 Login</div>
+<button onclick="closeMenu()" style="width:100%;margin-top:12px;padding:11px;border-radius:10px;background:var(--grad);color:#fff;border:none;font-weight:800">Close</button>
+</div>
+</div>
+
+<div class="back" onclick="location.href='index.html'"><span>‹</span> Back</div>
+<div class="top-title">Welcome to VERO STORE</div>
+
+<div class="box" id="loginBox">
+<div class="login-icon">👤</div>
+<div class="login-head">Login to Your Account</div>
+<div class="login-sub">Login to track orders & get faster checkout</div>
+
+<label class="label">Mobile Number</label>
+<input id="mobile" class="inp" placeholder="Enter 10 digit mobile number" type="tel" maxlength="10">
+
+<label class="label">Password</label>
+<input id="pass" class="inp" placeholder="Enter password (min 4 chars)" type="password">
+
+<button class="btn" onclick="doLogin()">LOGIN</button>
+
+<div class="divider">OR CONTINUE WITH</div>
+
+<button class="social-btn" onclick="alert('Google Login - Coming Soon!')"><img src="https://img.icons8.com/color/24/google-logo.png" alt="G"> Continue with Google</button>
+
+<div style="text-align:center;margin-top:14px;font-size:11px;color:#666">Don't have account? <span style="color:#5B7CFF;font-weight:800;cursor:pointer" onclick="doSignup()">Sign Up</span> • <span style="color:#5B7CFF;font-weight:800;cursor:pointer" onclick="alert('Contact +91 9016447067 for help')">Forgot Password?</span></div>
+</div>
+
+<div class="box logged-box" id="loggedBox">
+<div class="avatar" id="avatar">V</div>
+<div style="font-weight:900;font-size:16px" id="userName">Welcome!</div>
+<div style="font-size:12px;color:#666;margin-top:4px" id="userMobile">+91 9XXXX XXXXX</div>
+<div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<button onclick="location.href='orders.html'" style="background:#f1f3ff;border:1.5px solid #d8ddff;border-radius:10px;padding:12px;font-weight:800;font-size:12px;cursor:pointer;color:#5B7CFF">📦 My Orders</button>
+<button onclick="location.href='check-status.html'" style="background:#f1f3ff;border:1.5px solid #d8ddff;border-radius:10px;padding:12px;font-weight:800;font-size:12px;cursor:pointer;color:#5B7CFF">🔍 Check Status</button>
+</div>
+<button onclick="doLogout()" style="width:100%;margin-top:16px;background:#fee2e2;border:1.5px solid #fecaca;color:#dc2626;border-radius:10px;padding:12px;font-weight:800;font-size:13px;cursor:pointer">Logout</button>
+</div>
+
+<footer>
+<div style="margin-bottom:18px;">
+<div style="color:#fff;font-weight:900;font-size:15px;margin-bottom:4px;">VERO STORE</div>
+<div style="color:#9ca3af;font-size:12.5px;">Trusted MLBB Global Diamonds • Instant</div>
+</div>
+<div style="margin-bottom:18px;">
+<div style="color:#3B82FF;font-weight:900;font-size:14px;margin-bottom:8px;">Quick Links</div>
+<div style="display:flex;flex-direction:column;gap:5px;">
+<a href="index.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Home</a>
+<a href="orders.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Orders</a>
+<a href="privacy.html" style="color:#d1d5db;text-decoration:none;font-size:13px;">Privacy Policy</a>
+</div>
+</div>
+<div style="margin-bottom:18px;">
+<div style="color:#3B82FF;font-weight:900;font-size:14px;margin-bottom:8px;">Contact Store Owner</div>
+<div style="color:#d1d5db;font-size:13px;margin-bottom:4px;">WhatsApp: <a href="https://wa.me/919016447067" style="color:#8b5cf6;text-decoration:underline;font-weight:700;">+91 9016447067</a></div>
+<div style="color:#d1d5db;font-size:13px;">Email: <a href="mailto:tashevero22@gmail.com" style="color:#8b5cf6;text-decoration:underline;font-weight:700;">tashevero22@gmail.com</a></div>
+</div>
+<div style="text-align:center;border-top:1px solid #1f2937;padding-top:12px;">
+<div style="color:#9ca3af;font-size:11.5px;">© 2026 Vero Store. All Rights Reserved.</div>
+<div style="color:#6b7280;font-size:11px;margin-top:4px;">Designed & Developed by <span style="color:#8b5cf6;font-weight:700;">Tashe Vero</span></div>
+</div>
+</footer>
+
+<script>
+function openMenu(){document.getElementById('menuOverlay').classList.add('show')}
+function closeMenu(){document.getElementById('menuOverlay').classList.remove('show')}
+
+function checkLogin(){
+ const logged = localStorage.getItem('vero_logged')==='true';
+ if(logged){
+   document.getElementById('loginBox').style.display='none';
+   document.getElementById('loggedBox').style.display='block';
+   const mob = localStorage.getItem('vero_mobile')||'9XXXX XXXXX';
+   document.getElementById('userMobile').innerText = '+91 '+mob;
+   document.getElementById('userName').innerText = 'Welcome Back!';
+   document.getElementById('avatar').innerText = mob.charAt(0).toUpperCase();
+ }
+}
+checkLogin();
+
+function doLogin(){
+ const mob = document.getElementById('mobile').value.trim();
+ const pass = document.getElementById('pass').value.trim();
+ if(!/^[0-9]{10}$/.test(mob)){alert('Enter valid 10 digit mobile number');return;}
+ if(pass.length<4){alert('Password must be at least 4 characters');return;}
+ localStorage.setItem('vero_logged','true');
+ localStorage.setItem('vero_mobile',mob);
+ alert('Login Successful! Welcome to VERO STORE 🎮');
+ checkLogin();
+}
+function doSignup(){
+ const mob = document.getElementById('mobile').value.trim();
+ if(!mob){alert('Enter mobile number to sign up');return;}
+ localStorage.setItem('vero_logged','true');
+ localStorage.setItem('vero_mobile',mob||'9XXXX XXXXX');
+ alert('Account Created Successfully! 🎉');
+ checkLogin();
+}
+function doLogout(){
+ localStorage.removeItem('vero_logged');
+ localStorage.removeItem('vero_mobile');
+ document.getElementById('loginBox').style.display='block';
+ document.getElementById('loggedBox').style.display='none';
+ document.getElementById('mobile').value='';
+ document.getElementById('pass').value='';
+}
+</script>
+</body>
+</html>
