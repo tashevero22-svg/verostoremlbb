@@ -118,61 +118,37 @@ function selectPay(el, method){
  selectedMethod = method;
  document.getElementById('payBtn').innerText = `PAY NOW WITH ${method.toUpperCase()}`;
 }
+function safeText(s){ return String(s).replace(/[<>"'&]/g, c=>({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c])); }
 
-// --- FIXED REAL CHECK - WORKS ON GITHUB.IO ---
+// --- WORKING CHECK - VERO STORE COLOR KEPT ---
 async function checkUser(){
  const uid=document.getElementById('uid').value.trim();
  const zid=document.getElementById('zid').value.trim();
  const resultEl=document.getElementById('userResult');
- 
  if(!uid){alert('Enter User ID');return;}
  if(!zid){alert('Enter Zone ID');return;}
+ if(!/^[0-9]{5,12}$/.test(uid)){alert('Invalid User ID');return;}
+ if(!/^[0-9]{3,6}$/.test(zid)){alert('Invalid Zone ID');return;}
 
  resultEl.style.display='block';
- resultEl.style.color='#111';
+ resultEl.style.color='#5B7CFF';
  resultEl.innerText='⏳ Checking...';
 
- // List of free checkers to try one by one
- const apis = [
-  `https://api.isan.gg/v1/id/mobile-legends/${uid}/${zid}`,
-  `https://id-game-checker.vercel.app/api/mobile-legends?id=${uid}&zone=${zid}`,
-  `https://api.agc.id/api/ml/check?id=${uid}&zone=${zid}`
- ];
-
- for(let api of apis){
-  try{
-   // Use allorigins proxy to bypass CORS on github.io
-   const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(api)}`;
-   const res = await fetch(proxy);
-   const wrapper = await res.json();
-   const text = wrapper.contents;
-   const data = JSON.parse(text);
-
-   // Format 1: isan.gg -> {success:true, name:"..."}
-   if(data.success && data.name){
-    resultEl.style.color='#16a34a';
-    resultEl.innerText=`✅ ${data.name}`;
-    return;
+ try{
+   const api=`https://api.isan.eu.org/nickname/ml?id=${encodeURIComponent(uid)}&zone=${encodeURIComponent(zid)}`;
+   const r=await fetch(api);
+   const j=await r.json();
+   if(j && j.name && j.name.trim() !== ''){
+     resultEl.style.color='#16a34a';
+     resultEl.innerText=`✅ ${safeText(j.name)}`;
+   }else{
+     resultEl.style.color='#dc2626';
+     resultEl.innerText=`❌ Invalid User ID or Zone ID`;
    }
-   // Format 2: id-game-checker -> {data:{username:"..."}} or {username:"..."}
-   let realName = data.username || data.name || (data.data && data.data.username) || (data.data && data.data.name);
-   if(realName && realName !== '' && realName !== 'Invalid'){
-    resultEl.style.color='#16a34a';
-    resultEl.innerText=`✅ ${realName}`;
-    return;
-   }
-   // If API says invalid, try next but if last API also invalid then show invalid
-   if(data.error || data.success === false || data.message === 'Invalid ID'){
-    continue;
-   }
-  }catch(err){
-   continue; // try next API
-  }
+ }catch(e){
+   resultEl.style.color='#dc2626';
+   resultEl.innerText=`❌ Invalid User ID or Zone ID`;
  }
-
- // If all APIs say invalid or failed
- resultEl.style.color='#dc2626';
- resultEl.innerText=`❌ Invalid User ID or Zone ID`;
 }
 
 function payNow(){
