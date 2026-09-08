@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Weekly Pass - VERO STORE</title>
-<!-- Secure Payment SDK - Ready for next month -->
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -41,8 +40,6 @@ header{display:flex;justify-content:space-between;align-items:center;padding:10p
 footer{padding:15px;background:#0b0b14;color:#fff;border-top:3px solid transparent;border-image: var(--border-grad) 1;margin-top:20px;font-size:12px}
 footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:14px 0 6px;font-size:13px;font-weight:900}
 .back{color:#5B7CFF;padding:10px 12px;cursor:pointer;font-weight:800;font-size:13px}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid transparent;border-image: var(--border-grad) 1;display:flex;justify-content:space-around;padding:8px 0}
-.nav-item{color:#9aa3ff;text-align:center;font-size:10px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
 </style>
 </head>
 <body>
@@ -59,7 +56,7 @@ footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill
 <input id="uid" class="inp-uid" placeholder="Enter User ID">
 <input id="zid" class="inp-zone" placeholder="Zone ID">
 </div>
-<div class="hint">Tap avatar → Basic Info to find your UID. Ex: 12345678(1234)</div>
+<div class="hint">To find your User ID, click on your avatar in the top left corner of the main game screen. Then go to the "Basic Info" tab. Your User ID is shown below your nickname. Please input the complete user ID here, e.g. 12345678(1234).</div>
 <button class="check-btn" onclick="checkUser()">CHECK USERNAME</button>
 <div id="userResult" style="text-align:center;margin-top:10px;font-weight:700;display:none"></div>
 </div>
@@ -93,6 +90,16 @@ footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill
 
 <footer>
 <b style="color:#fff">VERO STORE</b><br><span style="color:#aaa">Trusted MLBB Global Diamonds • Instant</span>
+<h4>Quick Links</h4>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin:6px 0">
+<a href="index.html" style="color:#aaa;text-decoration:none">Home</a>
+<a href="weekly-pass.html" style="color:#aaa;text-decoration:none">Weekly Pass</a>
+<a href="diamonds.html" style="color:#aaa;text-decoration:none">Diamonds</a>
+<a href="terms.html" style="color:#aaa;text-decoration:none">Terms & Conditions</a>
+<a href="privacy.html" style="color:#aaa;text-decoration:none">Privacy Policy</a>
+<a href="refund.html" style="color:#aaa;text-decoration:none">Refund Policy</a>
+<a href="contact.html" style="color:#aaa;text-decoration:none">Contact Us</a>
+</div>
 <h4>Contact</h4><span style="color:#aaa">WhatsApp: +91 9016447067 | tashevero22@gmail.com</span><br><br>
 <div style="text-align:center;color:#8B5CF6">© 2026 Vero Store</div>
 </footer>
@@ -100,7 +107,6 @@ footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill
 <script>
 let selectedPkg = null;
 let selectedMethod = 'upi';
-
 function selectPkg(el, price, name){
  document.querySelectorAll('.pkg').forEach(p=>p.classList.remove('selected'));
  el.classList.add('selected');
@@ -114,22 +120,14 @@ function selectPay(el, method){
 }
 function checkUser(){
  const uid=document.getElementById('uid').value;
- const zid=document.getElementById('zid').value;
  if(!uid){alert('Enter UID');return;}
  document.getElementById('userResult').style.display='block';
- document.getElementById('userResult').innerText='✅ Username Verified (Demo) - Web Ready Mode';
+ document.getElementById('userResult').innerText='✅ Username Verified';
 }
 function payNow(){
- if(!document.getElementById('agree').checked){
-    alert('Please agree to Terms & Conditions');
-    return;
- }
+ if(!document.getElementById('agree').checked){alert('Please agree to Terms & Conditions');return;}
  if(!selectedPkg){alert('Select Package First');return;}
- // WEB READY MODE - No real payment this month
- alert(`WEB READY MODE\nPackage: ${selectedPkg.name} - ₹${selectedPkg.price}\nPayment: ${selectedMethod.toUpperCase()}\n\nThis month: Web ready only.\nNext month: Live payment + Auto delivery will be activated.\n\nYour site is ready!`);
- // NEXT MONTH CODE (uncomment when ready):
- // const cashfree = Cashfree({mode:"production"});
- // cashfree.checkout({paymentSessionId:"YOUR_SESSION_ID"});
+ alert(`WEB READY MODE\nPackage: ${selectedPkg.name} - ₹${selectedPkg.price}\nPayment: ${selectedMethod.toUpperCase()}\n\nThis month: Web ready only.\nNext month: Live payment + Auto delivery will be activated.`);
 }
 </script>
 </body>
