@@ -34,11 +34,10 @@ header{display:flex;justify-content:space-between;align-items:center;padding:10p
 .pay-opt.selected{border:2px solid #5B7CFF;background:#eef0ff}
 .pay-opt::after{content:'';position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;border:1.5px solid #d8ddff;background:#fff}
 .pay-opt.selected::after{content:'✓';background:#22c55e;border-color:#22c55e;color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;line-height:18px;text-align:center}
-.pay-opt img{width:28px;height:28px;object-fit:contain;border-radius:6px;background:#fff}
+.pay-opt img{width:36px;height:36px;object-fit:contain;border-radius:8px;background:#fff;padding:3px;border:1px solid #e5e7eb}
 .terms{margin:14px 0;text-align:center;font-size:12px}
 .pay-now{display:block;width:80%;margin:10px auto;background:var(--grad);color:#fff;font-weight:900;font-size:15px;border:none;border-radius:12px;padding:14px;cursor:pointer;box-shadow:0 4px 15px rgba(91,124,255,0.35)}
-footer{padding:15px;background:#0b0b14;color:#fff;border-top:3px solid transparent;border-image: var(--border-grad) 1;margin-top:20px;font-size:12px}
-footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:14px 0 6px;font-size:13px;font-weight:900}
+footer{padding:20px 18px;background:#060A14;color:#fff;border-top:3px solid transparent;border-image: var(--border-grad) 1;margin-top:20px;}
 .back{color:#5B7CFF;padding:10px 12px;cursor:pointer;font-weight:800;font-size:13px}
 </style>
 </head>
@@ -77,36 +76,68 @@ footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill
 </div>
 
 <div class="pay-methods">
-<div class="pay-opt selected" onclick="selectPay(this,'upi')"><img src="https://cdn.iconscout.com/icon/free/png-256/upi-2085056-1747946.png"><span>UPI</span></div>
-<div class="pay-opt" onclick="selectPay(this,'gpay')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg"><span>GPay</span></div>
-<div class="pay-opt" onclick="selectPay(this,'phonepe')"><img src="https://cdn.iconscout.com/icon/free/png-256/phonepe-2709164-2249151.png"><span>PhonePe</span></div>
-<div class="pay-opt" onclick="selectPay(this,'paytm')"><img src="https://cdn.iconscout.com/icon/free/png-256/paytm-2752065-2284883.png"><span>Paytm</span></div>
-<div class="pay-opt" onclick="selectPay(this,'mastercard')"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968299.png"><span>Mastercard</span></div>
-<div class="pay-opt" onclick="selectPay(this,'debitcard')"><img src="https://cdn-icons-png.flaticon.com/512/6963/6963703.png"><span>Debit Card</span></div>
+<div class="pay-opt selected" onclick="selectPay(this,'upi')"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" alt="UPI"><span>UPI</span></div>
+<div class="pay-opt" onclick="selectPay(this,'gpay')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="GPay"><span>GPay</span></div>
+<div class="pay-opt" onclick="selectPay(this,'phonepe')"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/PhonePe_Logo.svg" alt="PhonePe"><span>PhonePe</span></div>
+<div class="pay-opt" onclick="selectPay(this,'paytm')"><img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" alt="Paytm"><span>Paytm</span></div>
+<div class="pay-opt" onclick="selectPay(this,'mastercard')"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard"><span>MasterCard</span></div>
+<div class="pay-opt" onclick="selectPay(this,'debitcard')"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Debit Card"><span>Debit Card</span></div>
 </div>
 
 <div class="terms"><input type="checkbox" id="agree" checked> I agree to Terms & Conditions</div>
 <button class="pay-now" id="payBtn" onclick="payNow()">PAY NOW</button>
 
 <footer>
-<b style="color:#fff">VERO STORE</b><br><span style="color:#aaa">Trusted MLBB Global Diamonds • Instant</span>
-<h4>Quick Links</h4>
-<div style="display:flex;flex-wrap:wrap;gap:12px;margin:6px 0">
-<a href="index.html" style="color:#aaa;text-decoration:none">Home</a>
-<a href="weekly-pass.html" style="color:#aaa;text-decoration:none">Weekly Pass</a>
-<a href="diamonds.html" style="color:#aaa;text-decoration:none">Diamonds</a>
-<a href="terms.html" style="color:#aaa;text-decoration:none">Terms & Conditions</a>
-<a href="privacy.html" style="color:#aaa;text-decoration:none">Privacy Policy</a>
-<a href="refund.html" style="color:#aaa;text-decoration:none">Refund Policy</a>
-<a href="contact.html" style="color:#aaa;text-decoration:none">Contact Us</a>
+<div style="margin-bottom:20px;">
+<b style="color:#fff;font-size:16px;">VERO STORE</b><br>
+<span style="color:#9ca3af;font-size:13px;">Trusted MLBB Global Diamonds • Instant</span>
 </div>
-<h4>Contact</h4><span style="color:#aaa">WhatsApp: +91 9016447067 | tashevero22@gmail.com</span><br><br>
-<div style="text-align:center;color:#8B5CF6">© 2026 Vero Store</div>
+
+<div style="margin-bottom:22px;">
+<h3 style="color:#3B82FF;font-size:18px;font-weight:900;margin-bottom:10px;">Quick Links</h3>
+<div style="display:flex;flex-direction:column;gap:9px;">
+<a href="index.html" style="color:#d1d5db;text-decoration:none;font-size:14px;">Home</a>
+<a href="#" style="color:#d1d5db;text-decoration:none;font-size:14px;">About Us</a>
+<a href="privacy.html" style="color:#d1d5db;text-decoration:none;font-size:14px;">Privacy Policy</a>
+<a href="terms.html" style="color:#d1d5db;text-decoration:none;font-size:14px;">Terms & Conditions</a>
+<a href="refund.html" style="color:#d1d5db;text-decoration:none;font-size:14px;">Refund Policy</a>
+<a href="#" style="color:#d1d5db;text-decoration:none;font-size:14px;">Orders</a>
+<a href="#" style="color:#d1d5db;text-decoration:none;font-size:14px;">Profile</a>
+</div>
+</div>
+
+<div style="margin-bottom:22px;">
+<h3 style="color:#3B82FF;font-size:18px;font-weight:900;margin-bottom:10px;">We Accept</h3>
+<p style="color:#d1d5db;font-size:14px;line-height:1.6;">UPI | Paytm | GPay | PhonePe | MasterCard | Debit Card</p>
+</div>
+
+<div style="margin-bottom:22px;">
+<h3 style="color:#3B82FF;font-size:18px;font-weight:900;margin-bottom:10px;">Contact Store Owner</h3>
+<p style="color:#d1d5db;font-size:14px;margin:6px 0;">WhatsApp: <a href="https://wa.me/919016447067" style="color:#8b5cf6;text-decoration:underline;font-weight:700;">+91 9016447067</a></p>
+<p style="color:#d1d5db;font-size:14px;margin:6px 0;">Email: <a href="mailto:tashevero22@gmail.com" style="color:#8b5cf6;text-decoration:underline;font-weight:700;">tashevero22@gmail.com</a></p>
+</div>
+
+<div style="text-align:center;border-top:1px solid #1f2937;padding-top:14px;">
+<div style="color:#9ca3af;font-size:12px;">© 2026 Vero Store. All Rights Reserved.</div>
+<div style="color:#6b7280;font-size:11px;margin-top:6px;">Designed & Developed by <span style="color:#8b5cf6;font-weight:700;">Tashe Vero</span> — Founder of Vero Store | Contact Developer</div>
+</div>
 </footer>
 
 <script>
 let selectedPkg = null;
 let selectedMethod = 'upi';
+let verifiedName = localStorage.getItem('vero_verified_name') || '';
+let verifiedUID = localStorage.getItem('vero_verified_uid') || '';
+window.addEventListener('DOMContentLoaded', ()=>{
+  if(verifiedName && verifiedUID){
+    const el=document.getElementById('userResult');
+    el.style.display='block';
+    el.style.color='#16a34a';
+    el.innerText=`✅ ${verifiedName} (${verifiedUID})`;
+    document.getElementById('uid').value = localStorage.getItem('vero_uid') || '';
+    document.getElementById('zid').value = localStorage.getItem('vero_zid') || '';
+  }
+});
 function selectPkg(el, price, name){
  document.querySelectorAll('.pkg').forEach(p=>p.classList.remove('selected'));
  el.classList.add('selected');
@@ -118,9 +149,7 @@ function selectPay(el, method){
  selectedMethod = method;
  document.getElementById('payBtn').innerText = `PAY NOW WITH ${method.toUpperCase()}`;
 }
-function safeText(s){ return String(s).replace(/[<>"'&]/g, c=>({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c])); }
-
-// --- WORKING CHECK - VERO STORE COLOR KEPT ---
+function safeText(s){ return String(s).replace(/[<>"'&]/g, c=>({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c]));}
 async function checkUser(){
  const uid=document.getElementById('uid').value.trim();
  const zid=document.getElementById('zid').value.trim();
@@ -129,32 +158,41 @@ async function checkUser(){
  if(!zid){alert('Enter Zone ID');return;}
  if(!/^[0-9]{5,12}$/.test(uid)){alert('Invalid User ID');return;}
  if(!/^[0-9]{3,6}$/.test(zid)){alert('Invalid Zone ID');return;}
-
  resultEl.style.display='block';
  resultEl.style.color='#5B7CFF';
  resultEl.innerText='⏳ Checking...';
-
  try{
    const api=`https://api.isan.eu.org/nickname/ml?id=${encodeURIComponent(uid)}&zone=${encodeURIComponent(zid)}`;
    const r=await fetch(api);
    const j=await r.json();
    if(j && j.name && j.name.trim() !== ''){
+     verifiedName = j.name.trim();
+     verifiedUID = uid;
+     localStorage.setItem('vero_verified_name', verifiedName);
+     localStorage.setItem('vero_verified_uid', uid);
+     localStorage.setItem('vero_uid', uid);
+     localStorage.setItem('vero_zid', zid);
      resultEl.style.color='#16a34a';
-     resultEl.innerText=`✅ ${safeText(j.name)}`;
+     resultEl.innerText=`✅ ${safeText(verifiedName)}`;
    }else{
      resultEl.style.color='#dc2626';
      resultEl.innerText=`❌ Invalid User ID or Zone ID`;
+     verifiedName=''; verifiedUID='';
+     localStorage.removeItem('vero_verified_name');
+     localStorage.removeItem('vero_verified_uid');
    }
  }catch(e){
    resultEl.style.color='#dc2626';
    resultEl.innerText=`❌ Invalid User ID or Zone ID`;
  }
 }
-
 function payNow(){
- if(!document.getElementById('agree').checked){alert('Please agree to Terms & Conditions');return;}
+ if(!verifiedName){alert('Please CHECK USERNAME first');return;}
+ const uid=document.getElementById('uid').value.trim();
+ if(uid !== verifiedUID){alert('UID changed! Please CHECK USERNAME again');return;}
+ if(!document.getElementById('agree').checked){alert('Please agree to Terms');return;}
  if(!selectedPkg){alert('Select Package First');return;}
- alert(`WEB READY MODE\nPackage: ${selectedPkg.name} - ₹${selectedPkg.price}\nPayment: ${selectedMethod.toUpperCase()}\n\nThis month: Web ready only.\nNext month: Live payment + Auto delivery will be activated.`);
+ alert(`VERIFIED USER: ${verifiedName}\nUID: ${uid}\nPackage: ${selectedPkg.name} - ₹${selectedPkg.price}\nPayment: ${selectedMethod.toUpperCase()}`);
 }
 </script>
 </body>
