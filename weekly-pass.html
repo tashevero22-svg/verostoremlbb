@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Weekly Pass - VERO STORE</title>
-<!-- Cashfree SDK - Ready for next month -->
+<!-- Secure Payment SDK - Ready for next month -->
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -75,8 +75,8 @@ footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill
 
 <div class="pay-title">Select Payment Method</div>
 <div class="pay-box">
-<div style="font-weight:800;font-size:13px">100% Secure • Cashfree Gateway</div>
-<div style="font-size:11px;color:#666;margin-top:6px">UPI, Cards & Wallets - Auto Settlement to BOI</div>
+<div style="font-weight:800;font-size:13px">100% Secure • Encrypted Payment</div>
+<div style="font-size:11px;color:#666;margin-top:6px">UPI, Cards & Wallets - Instant & Safe</div>
 </div>
 
 <div class="pay-methods">
@@ -89,7 +89,7 @@ footer h4{background: var(--grad);-webkit-background-clip:text;-webkit-text-fill
 </div>
 
 <div class="terms"><input type="checkbox" id="agree" checked> I agree to Terms & Conditions</div>
-<button class="pay-now" id="payBtn" onclick="payNow()">PAY NOW WITH CASHFREE</button>
+<button class="pay-now" id="payBtn" onclick="payNow()">PAY NOW</button>
 
 <footer>
 <b style="color:#fff">VERO STORE</b><br><span style="color:#aaa">Trusted MLBB Global Diamonds • Instant</span>
@@ -110,7 +110,7 @@ function selectPay(el, method){
  document.querySelectorAll('.pay-opt').forEach(p=>p.classList.remove('selected'));
  el.classList.add('selected');
  selectedMethod = method;
- document.getElementById('payBtn').innerText = `PAY NOW WITH ${method.toUpperCase()} • Cashfree`;
+ document.getElementById('payBtn').innerText = `PAY NOW WITH ${method.toUpperCase()}`;
 }
 function checkUser(){
  const uid=document.getElementById('uid').value;
@@ -126,8 +126,8 @@ function payNow(){
  }
  if(!selectedPkg){alert('Select Package First');return;}
  // WEB READY MODE - No real payment this month
- alert(`WEB READY MODE\nPackage: ${selectedPkg.name} - ₹${selectedPkg.price}\nPayment: ${selectedMethod.toUpperCase()} via Cashfree\n\nThis month: Web ready only.\nNext month: Cashfree live + BOI settlement + Auto API will be activated.\n\nYour site is ready to sleep!`);
- // NEXT MONTH CODE (uncomment when Cashfree ready):
+ alert(`WEB READY MODE\nPackage: ${selectedPkg.name} - ₹${selectedPkg.price}\nPayment: ${selectedMethod.toUpperCase()}\n\nThis month: Web ready only.\nNext month: Live payment + Auto delivery will be activated.\n\nYour site is ready!`);
+ // NEXT MONTH CODE (uncomment when ready):
  // const cashfree = Cashfree({mode:"production"});
  // cashfree.checkout({paymentSessionId:"YOUR_SESSION_ID"});
 }
